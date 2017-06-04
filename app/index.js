@@ -28,6 +28,7 @@ var postColor = function(color, flavor){
     });
 }
 
+
 var text = $('#submit').click(function(event){
     event.preventDefault();
     let color = $('#color').val()
