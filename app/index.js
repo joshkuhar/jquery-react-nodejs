@@ -12,32 +12,32 @@ var postColor = function(color, flavor){
         type: 'POST',
         dataType: 'json',
         data: JSON.stringify({
-        	color: color,
-        	flavor: flavor
+          color: color,
+          flavor: flavor
         }),
         contentType: 'application/json'
     });
     ajax.done(function(result){
-    	console.log(result)
-			ReactDOM.render(
-				<Table 
-					colors={result}
-				/>,
-				container
-			)
+      console.log(result)
+      ReactDOM.render(
+        <Table 
+          colors={result}
+        />,
+        container
+      )
     });
 }
 
 var text = $('#submit').click(function(event){
-		event.preventDefault();
-		let color = $('#color').val()
-		let flavor = $('#flavor').val()
-		postColor(color, flavor)
-		$('#color').val('')
-		$('#flavor').val('')
-		ReactDOM.unmountComponentAtNode(
-				container
-			)
+    event.preventDefault();
+    let color = $('#color').val()
+    let flavor = $('#flavor').val()
+    postColor(color, flavor)
+    $('#color').val('')
+    $('#flavor').val('')
+    ReactDOM.unmountComponentAtNode(
+        container
+      )
 })
 
 
@@ -48,4 +48,4 @@ var text = $('#submit').click(function(event){
 
 
 
-	
+  
