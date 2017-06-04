@@ -14,15 +14,36 @@ class Table extends React.Component {
     }
   }
   componentDidMount() {
+    // *********
+    // this is where the data enters the
+    // React component, via this.props.colors
+    // *********
     this.setState({
       colors: this.props.colors
     })
   }
   onDelete(colorId) {
+    // **********
+    // This is where React handles the networking 
+    // from inside the component. 
+    // Data does not leave the component. It's a 
+    // blackhole. The only thing the data can do
+    // from inside is be destoryed or altered. It can not 
+    // get back out or passed back to the JQuery component. 
+    // **********
     fetch('/colors/'+colorId, { method: 'DELETE' })
       .then( (res) => res )
       .then( () => {
         var colors = this.state.colors
+        // ************
+        // Because data can not get back to the DOM
+        // the state is managed inside the component. 
+        // Note, be careful where you manipulate state in 
+        // the fetch event loop. Fetch ingnores 500. Fetch 
+        // ignores 500. Fetch ignores 500.
+        // Below is a good link to explain things a bit more
+        // https://www.tjvantoll.com/2015/09/13/fetch-and-errors
+        // ************
         for(var i in colors){
           if(colorId == colors[i].id){
             colors.splice(i, 1)

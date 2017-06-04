@@ -9578,6 +9578,10 @@ var Table = function (_React$Component) {
   _createClass(Table, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
+      // *********
+      // this is where the data enters the
+      // React component, via this.props.colors
+      // *********
       this.setState({
         colors: this.props.colors
       });
@@ -9587,10 +9591,27 @@ var Table = function (_React$Component) {
     value: function onDelete(colorId) {
       var _this2 = this;
 
+      // **********
+      // This is where React handles the networking 
+      // from inside the component. 
+      // Data does not leave the component. It's a 
+      // blackhole. The only thing the data can do
+      // from inside is be destoryed or altered. It can not 
+      // get back out or passed back to the JQuery component. 
+      // **********
       fetch('/colors/' + colorId, { method: 'DELETE' }).then(function (res) {
         return res;
       }).then(function () {
         var colors = _this2.state.colors;
+        // ************
+        // Because data can not get back to the DOM
+        // the state is managed inside the component. 
+        // Note, be careful where you manipulate state in 
+        // the fetch event loop. Fetch ingnores 500. Fetch 
+        // ignores 500. Fetch ignores 500.
+        // Below is a good link to explain things a bit more
+        // https://www.tjvantoll.com/2015/09/13/fetch-and-errors
+        // ************
         for (var i in colors) {
           if (colorId == colors[i].id) {
             colors.splice(i, 1);
@@ -19969,6 +19990,19 @@ var postColor = function postColor(color, flavor) {
     contentType: 'application/json'
   });
   ajax.done(function (result) {
+    // if(result.limit){
+    //   alert("you've reached your limit of 5")
+    // }
+    // *************
+    // Below is the event horizon.
+    // The data that is going in
+    // will not make it back out. It 
+    // can be altered or destroyed, but 
+    // will not be able to be used by 
+    // any other part of the DOM
+    // *************
+    // EVENT HORIZON
+    // *************
     _reactDom2.default.render(_react2.default.createElement(_table2.default, {
       colors: result
     }), container);
@@ -19980,6 +20014,14 @@ var text = $('#submit').click(function (event) {
   var color = $('#color').val();
   postColor(color);
   $('#color').val('');
+  // ***************
+  // This starts the process of mounting
+  // and unmounting the React Component.
+  // Even though there isn't a 
+  // React component rendered yet,
+  // The method 'unmountComponentAtNode' 
+  // below can be called
+  // ****************
   _reactDom2.default.unmountComponentAtNode(container);
 });
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(83)))
@@ -20027,6 +20069,8 @@ var Row = function (_React$Component) {
     value: function render() {
       var _this2 = this;
 
+      // This is where the colorId is passed into
+      // this bottom component vvvvvv
       var colorId = this.props.colorId;
       return _react2.default.createElement(
         'tr',
@@ -20162,6 +20206,12 @@ var Tiles = function (_React$Component) {
   _createClass(Tiles, [{
     key: 'render',
     value: function render() {
+      // There are several examples of map available. Some
+      // omit the index parameter. It's better to keep 
+      // it in.
+      // In the example below, background color is passed 
+      // in to allow for dynamic rendering. The rest of 
+      // styling is held in the CSS file. 
       var tiles = this.props.colors.map(function (color, index) {
         return _react2.default.createElement('div', {
           className: 'tile',
@@ -20191,7 +20241,7 @@ exports = module.exports = __webpack_require__(90)(undefined);
 exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700,300);", ""]);
 
 // module
-exports.push([module.i, "body {\n  background: lightcyan;\n  font-family: 'Roboto Condensed', sans-serif;\n}\n.react-component {\n  /*display: none;*/\n}\n.form-field {\n  text-align: center;\n}\n.form-input {\n  font-size: 1.1em;\n  padding: .25em;\n  border-radius: 5px;\n  border-style: none;\n  border: .01em solid grey;\n}\n.submit-button {\n  font-size: 1.1em;\n  padding: .3em;\n  border-radius: 5px;\n  border-style: none;\n  background-color: blueviolet;\n  color: white;\n}\n.submit-button:hover {\n  cursor: pointer;\n  background-color: cornflowerblue;\n}\n.td-color {\n  border-width: 0.05em;\n  border-style: solid;\n  border-color: lightgrey;\n  border-radius: 5px;\n  padding: 0.3em;  \n}\n.table-data {\n  border: .1em solid aliceblue;\n  border-radius: .5em;\n  padding: .3em;\n}\n.td-click {\n  width: 1em;\n  font-size: .8em;\n  background: red;\n  color: white;\n  padding: .6em;\n  text-align: center;\n}\n.td-click:hover {\n  background: crimson;\n  cursor: pointer;\n}\n.table-container {\n  min-width: 19em;\n  margin: 0 auto;\n\n}\n.thead-container {\n  text-align: left;\n  font-size: 1.2em;\n  color: darkcyan;\n}\n.tiles {\n  width: 15em;\n  margin: 1em auto;\n}\n.tile {\n    height: 2em;\n    width: 2em;\n    border-radius: 10px;\n    display: inline-block;\n    margin: .2em;\n}", ""]);
+exports.push([module.i, "body {\n  background: lightcyan;\n  font-family: 'Roboto Condensed', sans-serif;\n}\n.react-component {\n  /*display: none;*/\n}\n.form-field {\n  text-align: center;\n}\n.form-input {\n  font-size: 1.1em;\n  padding: .25em;\n  border-radius: 5px;\n  border-style: none;\n  border: .01em solid grey;\n}\n.submit-button {\n  font-size: 1.1em;\n  padding: .3em;\n  border-radius: 5px;\n  border-style: none;\n  background-color: blueviolet;\n  color: white;\n}\n.submit-button:hover {\n  cursor: pointer;\n  background-color: cornflowerblue;\n}\n.td-color {\n  border-width: 0.05em;\n  border-style: solid;\n  border-color: lightgrey;\n  border-radius: 5px;\n  padding: 0.3em;  \n}\n.table-data {\n  border: .1em solid aliceblue;\n  border-radius: .5em;\n  padding: .3em;\n}\n.td-click {\n  width: 1em;\n  font-size: .8em;\n  background: red;\n  color: white;\n  padding: .6em;\n  text-align: center;\n}\n.td-click:hover {\n  background: crimson;\n  cursor: pointer;\n}\n.table-container {\n  min-width: 19em;\n  margin: 0 auto;\n}\n.thead-container {\n  text-align: left;\n  font-size: 1.2em;\n  color: darkcyan;\n}\n.tiles {\n  width: 15em;\n  margin: 1em auto;\n}\n.tile {\n  height: 2em;\n  width: 2em;\n  border-radius: 10px;\n  display: inline-block;\n  margin: .2em;\n}", ""]);
 
 // exports
 

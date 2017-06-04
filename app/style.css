@@ -56,7 +56,6 @@ body {
 .table-container {
   min-width: 19em;
   margin: 0 auto;
-
 }
 .thead-container {
   text-align: left;
@@ -68,9 +67,9 @@ body {
   margin: 1em auto;
 }
 .tile {
-    height: 2em;
-    width: 2em;
-    border-radius: 10px;
-    display: inline-block;
-    margin: .2em;
+  height: 2em;
+  width: 2em;
+  border-radius: 10px;
+  display: inline-block;
+  margin: .2em;
 }

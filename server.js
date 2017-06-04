@@ -5,10 +5,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(express.static('public'));
 
-// color is an object 
-// example of a color object {color: 'red', flavor: 'berry'}
-// colors is an array of color objects
-// example of  colors [{color: 'blue', flavor: 'bright'}, {color: 'yellow', flavor: 'pepper'}]
 var id = 1;
 var colors = [
   {
@@ -17,10 +13,10 @@ var colors = [
   }
 ]
 function removeColor(id){
-  var length = colors.length
-  for(var i = 0; i<length; i++){
+  const length = colors.length
+  for(var i = 0; i < length; i++){
     if(id == colors[i].id){
-      colors.splice(i, 1)
+      colors.splice(i,1)
       return
     }
   }

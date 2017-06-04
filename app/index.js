@@ -17,6 +17,19 @@ var postColor = function(color, flavor){
         contentType: 'application/json'
     });
     ajax.done(function(result){
+      // if(result.limit){
+      //   alert("you've reached your limit of 5")
+      // }
+      // *************
+      // Below is the event horizon.
+      // The data that is going in
+      // will not make it back out. It 
+      // can be altered or destroyed, but 
+      // will not be able to be used by 
+      // any other part of the DOM
+      // *************
+      // EVENT HORIZON
+      // *************
       ReactDOM.render(
         <Table 
           colors={result}
@@ -31,6 +44,14 @@ var text = $('#submit').click(function(event){
     let color = $('#color').val()
     postColor(color)
     $('#color').val('')
+    // ***************
+    // This starts the process of mounting
+    // and unmounting the React Component.
+    // Even though there isn't a 
+    // React component rendered yet,
+    // The method 'unmountComponentAtNode' 
+    // below can be called
+    // ****************
     ReactDOM.unmountComponentAtNode(
         container
       )
