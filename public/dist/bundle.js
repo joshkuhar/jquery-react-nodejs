@@ -9531,7 +9531,7 @@ module.exports = getIteratorFn;
 
 
 Object.defineProperty(exports, "__esModule", {
-	value: true
+  value: true
 });
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -9548,6 +9548,10 @@ var _rows = __webpack_require__(87);
 
 var _rows2 = _interopRequireDefault(_rows);
 
+var _tiles = __webpack_require__(191);
+
+var _tiles2 = _interopRequireDefault(_tiles);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -9557,64 +9561,64 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var Table = function (_React$Component) {
-	_inherits(Table, _React$Component);
+  _inherits(Table, _React$Component);
 
-	function Table(props) {
-		_classCallCheck(this, Table);
+  function Table(props) {
+    _classCallCheck(this, Table);
 
-		var _this = _possibleConstructorReturn(this, (Table.__proto__ || Object.getPrototypeOf(Table)).call(this, props));
+    var _this = _possibleConstructorReturn(this, (Table.__proto__ || Object.getPrototypeOf(Table)).call(this, props));
 
-		_this.state = {
-			colors: []
-		};
-		return _this;
-	}
+    _this.state = {
+      colors: []
+    };
+    return _this;
+  }
 
-	_createClass(Table, [{
-		key: 'componentDidMount',
-		value: function componentDidMount() {
-			this.setState({
-				colors: this.props.colors
-			});
-		}
-	}, {
-		key: 'onDelete',
-		value: function onDelete(id) {
-			console.log(id);
-		}
-	}, {
-		key: 'render',
-		value: function render() {
-			return _react2.default.createElement(
-				'table',
-				null,
-				_react2.default.createElement(
-					'thead',
-					null,
-					_react2.default.createElement(
-						'tr',
-						null,
-						_react2.default.createElement(
-							'th',
-							null,
-							'Color'
-						),
-						_react2.default.createElement(
-							'th',
-							null,
-							'Flavor'
-						)
-					)
-				),
-				_react2.default.createElement(_rows2.default, {
-					colors: this.state.colors,
-					onDelete: this.onDelete
-				})
-			);
-		}
-	}]);
+  _createClass(Table, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      this.setState({
+        colors: this.props.colors
+      });
+    }
+  }, {
+    key: 'onDelete',
+    value: function onDelete(id) {
+      console.log(id);
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement(
+          'table',
+          { className: 'table-container' },
+          _react2.default.createElement(
+            'thead',
+            { className: 'thead-container' },
+            _react2.default.createElement(
+              'tr',
+              null,
+              _react2.default.createElement(
+                'th',
+                null,
+                'Color'
+              )
+            )
+          ),
+          _react2.default.createElement(_rows2.default, {
+            colors: this.state.colors,
+            onDelete: this.onDelete
+          })
+        ),
+        _react2.default.createElement(_tiles2.default, { colors: this.state.colors })
+      );
+    }
+  }]);
 
-	return Table;
+  return Table;
 }(_react2.default.Component);
 
 exports.default = Table;
@@ -19938,31 +19942,28 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var container = document.getElementById('root');
 
 var postColor = function postColor(color, flavor) {
-	var ajax = $.ajax('/colors', {
-		type: 'POST',
-		dataType: 'json',
-		data: JSON.stringify({
-			color: color,
-			flavor: flavor
-		}),
-		contentType: 'application/json'
-	});
-	ajax.done(function (result) {
-		console.log(result);
-		_reactDom2.default.render(_react2.default.createElement(_table2.default, {
-			colors: result
-		}), container);
-	});
+  var ajax = $.ajax('/colors', {
+    type: 'POST',
+    dataType: 'json',
+    data: JSON.stringify({
+      color: color
+    }),
+    contentType: 'application/json'
+  });
+  ajax.done(function (result) {
+    console.log(result);
+    _reactDom2.default.render(_react2.default.createElement(_table2.default, {
+      colors: result
+    }), container);
+  });
 };
 
 var text = $('#submit').click(function (event) {
-	event.preventDefault();
-	var color = $('#color').val();
-	var flavor = $('#flavor').val();
-	postColor(color, flavor);
-	$('#color').val('');
-	$('#flavor').val('');
-	_reactDom2.default.unmountComponentAtNode(container);
+  event.preventDefault();
+  var color = $('#color').val();
+  postColor(color);
+  $('#color').val('');
+  _reactDom2.default.unmountComponentAtNode(container);
 });
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(83)))
 
@@ -19974,7 +19975,7 @@ var text = $('#submit').click(function (event) {
 
 
 Object.defineProperty(exports, "__esModule", {
-	value: true
+  value: true
 });
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -19996,46 +19997,50 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var Row = function (_React$Component) {
-	_inherits(Row, _React$Component);
+  _inherits(Row, _React$Component);
 
-	function Row() {
-		_classCallCheck(this, Row);
+  function Row() {
+    _classCallCheck(this, Row);
 
-		return _possibleConstructorReturn(this, (Row.__proto__ || Object.getPrototypeOf(Row)).apply(this, arguments));
-	}
+    return _possibleConstructorReturn(this, (Row.__proto__ || Object.getPrototypeOf(Row)).apply(this, arguments));
+  }
 
-	_createClass(Row, [{
-		key: 'render',
-		value: function render() {
-			var _this2 = this;
+  _createClass(Row, [{
+    key: 'render',
+    value: function render() {
+      var _this2 = this;
 
-			var id = this.props.id;
-			return _react2.default.createElement(
-				'tr',
-				{ className: 'table-row' },
-				_react2.default.createElement(
-					'td',
-					{ className: 'table-data td-color' },
-					this.props.color
-				),
-				_react2.default.createElement(
-					'td',
-					{ className: 'table-data td-flavor' },
-					this.props.flavor
-				),
-				_react2.default.createElement(
-					'td',
-					{ className: 'table-data td-click',
-						onClick: function onClick() {
-							return _this2.props.onDelete(id);
-						} },
-					'delete'
-				)
-			);
-		}
-	}]);
+      var id = this.props.id;
+      var background = this.props.background ? this.props.background : 'white';
+      var styles = {
+        borderWidth: '.05em',
+        borderStyle: 'solid',
+        borderColor: 'lightGrey',
+        borderRadius: '5px',
+        padding: '.3em',
+        backgroundColor: background
+      };
+      return _react2.default.createElement(
+        'tr',
+        null,
+        _react2.default.createElement(
+          'td',
+          { style: styles },
+          this.props.color
+        ),
+        _react2.default.createElement(
+          'td',
+          { className: 'table-data td-click',
+            onClick: function onClick() {
+              return _this2.props.onDelete(id);
+            } },
+          'delete'
+        )
+      );
+    }
+  }]);
 
-	return Row;
+  return Row;
 }(_react2.default.Component);
 
 exports.default = Row;
@@ -20048,7 +20053,7 @@ exports.default = Row;
 
 
 Object.defineProperty(exports, "__esModule", {
-	value: true
+  value: true
 });
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -20074,37 +20079,37 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var Rows = function (_React$Component) {
-	_inherits(Rows, _React$Component);
+  _inherits(Rows, _React$Component);
 
-	function Rows() {
-		_classCallCheck(this, Rows);
+  function Rows() {
+    _classCallCheck(this, Rows);
 
-		return _possibleConstructorReturn(this, (Rows.__proto__ || Object.getPrototypeOf(Rows)).apply(this, arguments));
-	}
+    return _possibleConstructorReturn(this, (Rows.__proto__ || Object.getPrototypeOf(Rows)).apply(this, arguments));
+  }
 
-	_createClass(Rows, [{
-		key: 'render',
-		value: function render() {
-			var _this2 = this;
+  _createClass(Rows, [{
+    key: 'render',
+    value: function render() {
+      var _this2 = this;
 
-			var rows = this.props.colors.map(function (color) {
-				return _react2.default.createElement(_row2.default, {
-					key: color.id,
-					color: color.color,
-					flavor: color.flavor,
-					onDelete: _this2.props.onDelete,
-					id: color.id
-				});
-			});
-			return _react2.default.createElement(
-				'tbody',
-				null,
-				rows
-			);
-		}
-	}]);
+      var rows = this.props.colors.map(function (color) {
+        return _react2.default.createElement(_row2.default, {
+          key: color.id,
+          color: color.color,
+          onDelete: _this2.props.onDelete,
+          id: color.id,
+          background: color.background
+        });
+      });
+      return _react2.default.createElement(
+        'tbody',
+        null,
+        rows
+      );
+    }
+  }]);
 
-	return Rows;
+  return Rows;
 }(_react2.default.Component);
 
 exports.default = Rows;
@@ -20115,10 +20120,10 @@ exports.default = Rows;
 
 exports = module.exports = __webpack_require__(89)(undefined);
 // imports
-
+exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700,300);", ""]);
 
 // module
-exports.push([module.i, "body {\n\tbackground: azure;\n}\n.react-component {\n\t/*display: none;*/\n}", ""]);
+exports.push([module.i, "body {\n  background: lightcyan;\n  font-family: 'Roboto Condensed', sans-serif;\n}\n.react-component {\n  /*display: none;*/\n}\n.form-field {\n  text-align: center;\n}\n.form-input {\n  font-size: 1.1em;\n  padding: .25em;\n  border-radius: 5px;\n  border-style: none;\n  border: .01em solid grey;\n}\n.submit-button {\n  font-size: 1.1em;\n  padding: .3em;\n  border-radius: 5px;\n  border-style: none;\n  background-color: blueviolet;\n  color: white;\n}\n.submit-button:hover {\n  cursor: pointer;\n  background-color: cornflowerblue;\n}\n.td-color {\n\n}\n.table-data {\n  border: .1em solid aliceblue;\n  border-radius: .5em;\n  padding: .3em;\n}\n.td-click {\n  width: 1em;\n  font-size: .8em;\n  background: red;\n  color: white;\n  padding: .6em;\n  text-align: center;\n}\n.td-click:hover {\n  background: crimson;\n  cursor: pointer;\n}\n.table-container {\n  min-width: 19em;\n  margin: 0 auto;\n\n}\n.thead-container {\n  text-align: left;\n  font-size: 1.2em;\n  color: darkcyan;\n}\n.tiles {\n  width: 15em;\n  margin: 1em auto;\n}\n.tile {\n    height: 2em;\n    width: 2em;\n    border-radius: 10px;\n    display: inline-block;\n    margin: .2em;\n}", ""]);
 
 // exports
 
@@ -33146,6 +33151,68 @@ module.exports = function (css) {
 	return fixedCss;
 };
 
+
+/***/ }),
+/* 191 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(26);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactDom = __webpack_require__(25);
+
+var _reactDom2 = _interopRequireDefault(_reactDom);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Tiles = function (_React$Component) {
+  _inherits(Tiles, _React$Component);
+
+  function Tiles() {
+    _classCallCheck(this, Tiles);
+
+    return _possibleConstructorReturn(this, (Tiles.__proto__ || Object.getPrototypeOf(Tiles)).apply(this, arguments));
+  }
+
+  _createClass(Tiles, [{
+    key: 'render',
+    value: function render() {
+      var tiles = this.props.colors.map(function (color) {
+        return _react2.default.createElement('div', {
+          className: 'tile',
+          style: { backgroundColor: color.color },
+          key: color.id,
+          id: color.id
+        });
+      });
+      return _react2.default.createElement(
+        'div',
+        { className: 'tiles' },
+        tiles
+      );
+    }
+  }]);
+
+  return Tiles;
+}(_react2.default.Component);
+
+exports.default = Tiles;
 
 /***/ })
 /******/ ]);

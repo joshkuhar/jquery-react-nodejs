@@ -3,6 +3,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Rows from './rows';
+import Tiles from './tiles';
 
 class Table extends React.Component {
   constructor(props){
@@ -21,11 +22,11 @@ class Table extends React.Component {
   }
   render() {
     return (
-        <table>
-          <thead>
+      <div>
+        <table className='table-container'>
+          <thead className='thead-container'>
             <tr>
               <th>Color</th>
-              <th>Flavor</th>
             </tr>
           </thead>
             <Rows 
@@ -33,6 +34,8 @@ class Table extends React.Component {
               onDelete={this.onDelete}
             />
        </table>
+       <Tiles colors={this.state.colors} />
+      </div>
     
       )
   }

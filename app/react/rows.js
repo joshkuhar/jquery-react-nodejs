@@ -9,9 +9,9 @@ class Rows extends React.Component {
       return <Row 
             key={color.id}
             color={color.color}
-            flavor={color.flavor}
             onDelete={this.props.onDelete}
             id={color.id}
+            background={color.background}
           />
     })
     return (

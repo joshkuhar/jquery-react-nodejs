@@ -12,8 +12,7 @@ var postColor = function(color, flavor){
         type: 'POST',
         dataType: 'json',
         data: JSON.stringify({
-          color: color,
-          flavor: flavor
+          color: color
         }),
         contentType: 'application/json'
     });
@@ -28,14 +27,11 @@ var postColor = function(color, flavor){
     });
 }
 
-
 var text = $('#submit').click(function(event){
     event.preventDefault();
     let color = $('#color').val()
-    let flavor = $('#flavor').val()
-    postColor(color, flavor)
+    postColor(color)
     $('#color').val('')
-    $('#flavor').val('')
     ReactDOM.unmountComponentAtNode(
         container
       )
