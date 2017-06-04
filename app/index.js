@@ -17,7 +17,6 @@ var postColor = function(color, flavor){
         contentType: 'application/json'
     });
     ajax.done(function(result){
-      console.log(result)
       ReactDOM.render(
         <Table 
           colors={result}

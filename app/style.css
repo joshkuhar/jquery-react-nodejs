@@ -30,7 +30,11 @@ body {
   background-color: cornflowerblue;
 }
 .td-color {
-
+  border-width: 0.05em;
+  border-style: solid;
+  border-color: lightgrey;
+  border-radius: 5px;
+  padding: 0.3em;  
 }
 .table-data {
   border: .1em solid aliceblue;

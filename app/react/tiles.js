@@ -5,12 +5,11 @@ import ReactDOM from 'react-dom';
 
 class Tiles extends React.Component {
   render() {
-    let tiles = this.props.colors.map( (color) => {
+    let tiles = this.props.colors.map( (color, index) => {
       return <div
           className='tile'
           style={ {backgroundColor: color.color} } 
-          key={color.id}
-          id={color.id}
+          key={index}
           ></div>
     })
     return (

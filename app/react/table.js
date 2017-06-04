@@ -8,6 +8,7 @@ import Tiles from './tiles';
 class Table extends React.Component {
   constructor(props){
     super(props)
+    this.onDelete = this.onDelete.bind(this)
     this.state = {
       colors: []
     }
@@ -17,8 +18,24 @@ class Table extends React.Component {
       colors: this.props.colors
     })
   }
-  onDelete(id) {
-    console.log(id)
+  onDelete(colorId) {
+    fetch('/colors/'+colorId, { method: 'DELETE' })
+      .then( (res) => res )
+      .then( () => {
+        var colors = this.state.colors
+        for(var i in colors){
+          if(colorId == colors[i].id){
+            colors.splice(i, 1)
+          }
+        }
+        this.setState({
+          colors: colors
+        })
+        return
+      })
+      .catch( (err) => {
+        console.log(err)
+      })
   }
   render() {
     return (

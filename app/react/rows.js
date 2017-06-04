@@ -5,13 +5,12 @@ import Row from './row';
 
 class Rows extends React.Component {
   render() {
-    let rows = this.props.colors.map( (color) => {
+    let rows = this.props.colors.map( (color, index) => {
       return <Row 
-            key={color.id}
+            key={index}
             color={color.color}
             onDelete={this.props.onDelete}
-            id={color.id}
-            background={color.background}
+            colorId={color.id}
           />
     })
     return (
