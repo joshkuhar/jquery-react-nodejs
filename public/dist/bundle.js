@@ -19988,7 +19988,6 @@ var container = document.getElementById('root');
 function getAllColorTiles() {
   return $.find('.tile');
 }
-var length = 0;
 
 var postColor = function postColor(color, flavor) {
   var ajax = $.ajax('/colors', {
@@ -20021,7 +20020,7 @@ var postColor = function postColor(color, flavor) {
 
 var text = $('#submit').click(function (event) {
   event.preventDefault();
-  var tiles = getAllColorTiles();
+  var tiles = $.find('.tile');
   if (tiles.length > 4) {
     alert("You've reached your maximum amount of tiles");
     return;
