@@ -41,6 +41,6 @@ app.delete('/colors/:id', (req, res) => {
   res.status(201).end()
 })
 
-app.listen(process.env.PORT || 8080)
+app.listen(process.env.PORT || 8080, process.env.IP);
 
 
