@@ -19980,6 +19980,16 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var container = document.getElementById('root');
 
+// var updateReact = function(cb){
+//   const length = cb
+//   console.log(length)
+// }
+
+function getAllColorTiles() {
+  return $.find('.tile');
+}
+var length = 0;
+
 var postColor = function postColor(color, flavor) {
   var ajax = $.ajax('/colors', {
     type: 'POST',
@@ -20011,6 +20021,11 @@ var postColor = function postColor(color, flavor) {
 
 var text = $('#submit').click(function (event) {
   event.preventDefault();
+  var tiles = getAllColorTiles();
+  if (tiles.length > 4) {
+    alert("You've reached your maximum amount of tiles");
+    return;
+  }
   var color = $('#color').val();
   postColor(color);
   $('#color').val('');

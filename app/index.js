@@ -7,6 +7,15 @@ import Table from './react/table';
 
 const container = document.getElementById('root')
 
+// var updateReact = function(cb){
+//   const length = cb
+//   console.log(length)
+// }
+
+function getAllColorTiles(){
+  return $.find('.tile')
+}
+
 var postColor = function(color, flavor){
     var ajax = $.ajax('/colors', {
         type: 'POST',
@@ -41,6 +50,11 @@ var postColor = function(color, flavor){
 
 var text = $('#submit').click(function(event){
     event.preventDefault();
+    var tiles = $.find('.tile')
+    if(tiles.length > 4){
+      alert("You've reached your maximum amount of tiles")
+      return
+    }
     let color = $('#color').val()
     postColor(color)
     $('#color').val('')
