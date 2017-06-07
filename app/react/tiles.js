@@ -14,7 +14,7 @@ class Tiles extends React.Component {
     let tiles = this.props.colors.map( (color, index) => {
       return <div
           className='tile'
-          style={ {backgroundColor: color.color} } 
+          style={ {backgroundColor: color} } 
           key={index}
           ></div>
     })

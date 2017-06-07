@@ -4,9 +4,6 @@ body {
   background: lightcyan;
   font-family: 'Roboto Condensed', sans-serif;
 }
-.react-component {
-  /*display: none;*/
-}
 .form-field {
   text-align: center;
 }

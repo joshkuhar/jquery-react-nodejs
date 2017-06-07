@@ -22,7 +22,18 @@ class Table extends React.Component {
       colors: this.props.colors
     })
   }
-  onDelete(colorId) {
+  onDelete(color) {
+    console.log(color, this.state.colors)
+    const colors = this.state.colors
+    for(var i in colors){
+      if(color == colors[i]){
+        colors.splice(i, 1)
+      }
+    }
+    this.setState({
+      colors: colors
+    })
+
     // **********
     // This is where React handles the networking 
     // from inside the component. 
@@ -31,32 +42,32 @@ class Table extends React.Component {
     // from inside is be destoryed or altered. It can not 
     // get back out or passed back to the JQuery component. 
     // **********
-    fetch('/colors/'+colorId, { method: 'DELETE' })
-      .then( (res) => res )
-      .then( () => {
-        var colors = this.state.colors
-        // ************
-        // Because data can not get back to the DOM
-        // the state is managed inside the component. 
-        // Note, be careful where you manipulate state in 
-        // the fetch event loop. Fetch ingnores 500. Fetch 
-        // ignores 500. Fetch ignores 500.
-        // Below is a good link to explain things a bit more
-        // https://www.tjvantoll.com/2015/09/13/fetch-and-errors
-        // ************
-        for(var i in colors){
-          if(colorId == colors[i].id){
-            colors.splice(i, 1)
-          }
-        }
-        this.setState({
-          colors: colors
-        })
-        return
-      })
-      .catch( (err) => {
-        console.log(err)
-      })
+    // fetch('/colors/'+colorId, { method: 'DELETE' })
+    //   .then( (res) => res )
+    //   .then( () => {
+    //     var colors = this.state.colors
+    //     // ************
+    //     // Because data can not get back to the DOM
+    //     // the state is managed inside the component. 
+    //     // Note, be careful where you manipulate state in 
+    //     // the fetch event loop. Fetch ingnores 500. Fetch 
+    //     // ignores 500. Fetch ignores 500.
+    //     // Below is a good link to explain things a bit more
+    //     // https://www.tjvantoll.com/2015/09/13/fetch-and-errors
+    //     // ************
+    //     for(var i in colors){
+    //       if(colorId == colors[i].id){
+    //         colors.splice(i, 1)
+    //       }
+    //     }
+    //     this.setState({
+    //       colors: colors
+    //     })
+    //     return
+    //   })
+    //   .catch( (err) => {
+    //     console.log(err)
+    //   })
   }
   render() {
     return (
