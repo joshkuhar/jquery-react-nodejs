@@ -14,10 +14,6 @@ class Table extends React.Component {
     }
   }
   componentDidMount() {
-    // *********
-    // this is where the data enters the
-    // React component, via this.props.colors
-    // *********
     this.setState({
       colors: this.props.colors
     })
