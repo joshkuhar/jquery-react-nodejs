@@ -6,28 +6,6 @@ import ReactDOM from 'react-dom';
 import Table from './react/table';
 import { checkColor } from './helpers/color-list'
 
-var postColor = function(color){
-  var ajax = $.ajax('/colors', {
-      type: 'POST',
-      dataType: 'json',
-      data: JSON.stringify({
-        color: color
-      }),
-      contentType: 'application/json'
-  });
-  ajax.done(function(result){
-    console.log(result)
-    ReactDOM.unmountComponentAtNode(
-      document.getElementById('root')
-      )
-    ReactDOM.render(
-      <Table 
-        colors={result}
-      />,
-      document.getElementById('root')
-    )
-  });
-}
 
 $('#button').click(function(event){
   event.preventDefault();
@@ -47,6 +25,27 @@ $('#button').click(function(event){
   $('#color').val('')
 })
 
+var postColor = function(color){
+  var ajax = $.ajax('/colors', {
+      type: 'POST',
+      dataType: 'json',
+      data: JSON.stringify({
+        color: color
+      }),
+      contentType: 'application/json'
+  });
+  ajax.done(function(result){
+    ReactDOM.unmountComponentAtNode(
+      document.getElementById('root')
+      )
+    ReactDOM.render(
+      <Table 
+        colors={result}
+      />,
+      document.getElementById('root')
+    )
+  });
+}
 
 
 

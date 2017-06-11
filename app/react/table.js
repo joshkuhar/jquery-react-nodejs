@@ -1,13 +1,12 @@
 'use strict';
 
 import React from 'react';
-import ReactDOM from 'react-dom';
 import Rows from './rows';
 
 class Table extends React.Component {
   constructor(props){
     super(props)
-    this.onDelete = this.onDelete.bind(this)
+    this._onDelete = this._onDelete.bind(this)
     this.state = {
       colors: []
     }
@@ -17,7 +16,7 @@ class Table extends React.Component {
       colors: this.props.colors
     })
   }
-  removeColor(colorId){
+  _removeColor(colorId){
     var colors = this.state.colors
     for(var i in colors){
       if(colorId == colors[i].id){
@@ -28,7 +27,7 @@ class Table extends React.Component {
       colors: colors
     })    
   }
-  onDelete(colorId) {
+  _onDelete(colorId) {
     fetch('/colors/'+colorId, { 
       method: 'DELETE' 
     })
@@ -41,7 +40,7 @@ class Table extends React.Component {
       return res
     })
     .then( () => {
-      this.removeColor(colorId)
+      this._removeColor(colorId)
       return
     })
     .catch( (err) => {
@@ -51,11 +50,11 @@ class Table extends React.Component {
   render() {
     return (
       <div>
+        <div className='react-header'>React Component</div>
         <table className='table-container'>
-         <div className='react-header'>React Component</div>
           <Rows 
             colors={this.state.colors}
-            onDelete={this.onDelete}
+            onDelete={this._onDelete}
           />
        </table>
       </div>

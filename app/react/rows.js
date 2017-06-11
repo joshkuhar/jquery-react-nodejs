@@ -1,6 +1,6 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+'use strict'
 
+import React from 'react';
 import Row from './row';
 
 class Rows extends React.Component {
