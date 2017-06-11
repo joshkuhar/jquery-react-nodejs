@@ -7,9 +7,10 @@ class Rows extends React.Component {
   render() {
     let rows = this.props.colors.map( (color, index) => {
       return <Row 
-            key={index}
-            color={color}
-            onDelete={this.props.onDelete}
+          key={index}
+          color={color.color}
+          onDelete={this.props.onDelete}
+          colorId={color.id}
           />
     })
     return (
@@ -20,5 +21,3 @@ class Rows extends React.Component {
 
 
 export default Rows
-
-//  colorId={color.id}

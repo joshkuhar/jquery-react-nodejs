@@ -6,41 +6,39 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(express.static('public'));
 
 var id = 1;
-var colors = [
-  {
-    id: 1, 
-    color: 'green'
+var colors = []
+function addColor(color){
+  id++
+  const newColor = {
+    id: id,
+    color: color
   }
-]
+  colors.push(newColor)
+}
 function removeColor(id){
-  const length = colors.length
-  for(var i = 0; i < length; i++){
+  for(var i in colors) {
     if(id == colors[i].id){
       colors.splice(i,1)
       return
     }
   }
 }
+
 app.get('/colors', (req, res) => {
-  res.json(colors)
+  // use this to check if the server is running
+  res.json({status : 'server is running'})
 })
 
 app.post('/colors', (req, res) => {
-  const color = req.body.color
-  id++
-  const newColor = {
-    id: id, 
-    color: color
-  }
-  colors.push(newColor)
-  res.json(colors)
+  addColor(req.body.color)
+  res.status(201).json(colors)
 })
 
 app.delete('/colors/:id', (req, res) => {
   removeColor(req.params.id)
-  res.status(201).end()
+  res.status(200).end()
 })
 
-app.listen(process.env.PORT || 8080, process.env.IP);
+app.listen(process.env.PORT || 8080);
 
 

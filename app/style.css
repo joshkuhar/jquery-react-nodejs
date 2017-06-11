@@ -4,8 +4,15 @@ body {
   background: lightcyan;
   font-family: 'Roboto Condensed', sans-serif;
 }
+h2, .library-header, .react-header {
+  text-align: center;
+}
+.library-header, .react-header {
+  margin-bottom: .5em;
+}
 .form-field {
   text-align: center;
+  margin-bottom: 1.5em;
 }
 .form-input {
   font-size: 1.1em;
@@ -31,7 +38,8 @@ body {
   border-style: solid;
   border-color: lightgrey;
   border-radius: 5px;
-  padding: 0.3em;  
+  padding: 0.3em; 
+  color: white; 
 }
 .table-data {
   border: .1em solid aliceblue;
@@ -53,20 +61,4 @@ body {
 .table-container {
   min-width: 19em;
   margin: 0 auto;
-}
-.thead-container {
-  text-align: left;
-  font-size: 1.2em;
-  color: darkcyan;
-}
-.tiles {
-  width: 15em;
-  margin: 1em auto;
-}
-.tile {
-  height: 2em;
-  width: 2em;
-  border-radius: 10px;
-  display: inline-block;
-  margin: .2em;
 }

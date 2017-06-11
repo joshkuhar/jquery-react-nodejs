@@ -9548,10 +9548,6 @@ var _rows = __webpack_require__(87);
 
 var _rows2 = _interopRequireDefault(_rows);
 
-var _tiles = __webpack_require__(88);
-
-var _tiles2 = _interopRequireDefault(_tiles);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -9578,62 +9574,43 @@ var Table = function (_React$Component) {
   _createClass(Table, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
-      // *********
-      // this is where the data enters the
-      // React component, via this.props.colors
-      // *********
       this.setState({
         colors: this.props.colors
       });
     }
   }, {
-    key: 'onDelete',
-    value: function onDelete(color) {
-      console.log(color, this.state.colors);
+    key: 'removeColor',
+    value: function removeColor(colorId) {
       var colors = this.state.colors;
       for (var i in colors) {
-        if (color == colors[i]) {
+        if (colorId == colors[i].id) {
           colors.splice(i, 1);
         }
       }
       this.setState({
         colors: colors
       });
+    }
+  }, {
+    key: 'onDelete',
+    value: function onDelete(colorId) {
+      var _this2 = this;
 
-      // **********
-      // This is where React handles the networking 
-      // from inside the component. 
-      // Data does not leave the component. It's a 
-      // blackhole. The only thing the data can do
-      // from inside is be destoryed or altered. It can not 
-      // get back out or passed back to the JQuery component. 
-      // **********
-      // fetch('/colors/'+colorId, { method: 'DELETE' })
-      //   .then( (res) => res )
-      //   .then( () => {
-      //     var colors = this.state.colors
-      //     // ************
-      //     // Because data can not get back to the DOM
-      //     // the state is managed inside the component. 
-      //     // Note, be careful where you manipulate state in 
-      //     // the fetch event loop. Fetch ingnores 500. Fetch 
-      //     // ignores 500. Fetch ignores 500.
-      //     // Below is a good link to explain things a bit more
-      //     // https://www.tjvantoll.com/2015/09/13/fetch-and-errors
-      //     // ************
-      //     for(var i in colors){
-      //       if(colorId == colors[i].id){
-      //         colors.splice(i, 1)
-      //       }
-      //     }
-      //     this.setState({
-      //       colors: colors
-      //     })
-      //     return
-      //   })
-      //   .catch( (err) => {
-      //     console.log(err)
-      //   })
+      fetch('/colors/' + colorId, {
+        method: 'DELETE'
+      }).then(function (res) {
+        // With fetch, 500
+        // must be handled manually
+        if (!res.ok) {
+          throw Error(res.statusText);
+        }
+        return res;
+      }).then(function () {
+        _this2.removeColor(colorId);
+        return;
+      }).catch(function (err) {
+        console.log(err);
+      });
     }
   }, {
     key: 'render',
@@ -9645,24 +9622,15 @@ var Table = function (_React$Component) {
           'table',
           { className: 'table-container' },
           _react2.default.createElement(
-            'thead',
-            { className: 'thead-container' },
-            _react2.default.createElement(
-              'tr',
-              null,
-              _react2.default.createElement(
-                'th',
-                null,
-                'Color'
-              )
-            )
+            'div',
+            { className: 'react-header' },
+            'React Component'
           ),
           _react2.default.createElement(_rows2.default, {
             colors: this.state.colors,
             onDelete: this.onDelete
           })
-        ),
-        _react2.default.createElement(_tiles2.default, { colors: this.state.colors })
+        )
       );
     }
   }]);
@@ -19986,92 +19954,45 @@ var _table = __webpack_require__(82);
 
 var _table2 = _interopRequireDefault(_table);
 
+var _colorList = __webpack_require__(193);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var container = document.getElementById('root');
+var postColor = function postColor(color) {
+  var ajax = $.ajax('/colors', {
+    type: 'POST',
+    dataType: 'json',
+    data: JSON.stringify({
+      color: color
+    }),
+    contentType: 'application/json'
+  });
+  ajax.done(function (result) {
+    console.log(result);
+    _reactDom2.default.unmountComponentAtNode(document.getElementById('root'));
+    _reactDom2.default.render(_react2.default.createElement(_table2.default, {
+      colors: result
+    }), document.getElementById('root'));
+  });
+};
 
-// var postColor = function(color, flavor){
-//     var ajax = $.ajax('/colors', {
-//         type: 'POST',
-//         dataType: 'json',
-//         data: JSON.stringify({
-//           color: color
-//         }),
-//         contentType: 'application/json'
-//     });
-//     ajax.done(function(result){
-//       // *************
-//       // Below is the event horizon.
-//       // The data that is going in
-//       // will not make it back out. It 
-//       // can be altered or destroyed, but 
-//       // will not be able to be used by 
-//       // any other part of the DOM
-//       // *************
-//       // EVENT HORIZON
-//       // *************
-//       ReactDOM.render(
-//         <Table 
-//           colors={result}
-//         />,
-//         container
-//       )
-//     });
-// }
-
-// var text = $('#submit').click(function(event){
-//     event.preventDefault();
-//     var colors = $.find('.td-color')
-//     if(colors.length > 4){
-//       alert("You've reached your maximum amount of colors")
-//       return
-//     }
-//     let color = $('#color').val()
-//     postColor(color)
-//     $('#color').val('')
-//     // ***************
-//     // This starts the process of mounting
-//     // and unmounting the React Component.
-//     // Even though there isn't a 
-//     // React component rendered yet,
-//     // The method 'unmountComponentAtNode' 
-//     // below can be called
-//     // ****************
-//     ReactDOM.unmountComponentAtNode(
-//         container
-//       )
-//     ReactDOM.render(
-//         <Table 
-//           colors={newColors}
-//         />,
-//         container
-//       )
-// })
-var text = $('#submit').click(function (event) {
+$('#button').click(function (event) {
   event.preventDefault();
   var colors = $.find('.td-color');
   if (colors.length > 4) {
     alert("You've reached your maximum amount of colors");
+    var colors = [];
     return;
   }
-  var newColors = colors.map(function (color) {
-    return color.innerText;
-  });
   var color = $('#color').val();
-  newColors.push(color);
+  var checked = (0, _colorList.checkColor)(color.trim());
+  if (!checked) {
+    alert('Please enter a valid CSS color.');
+    return;
+  }
+  postColor(color);
   $('#color').val('');
-  _reactDom2.default.unmountComponentAtNode(container);
-  _reactDom2.default.render(_react2.default.createElement(_table2.default, {
-    colors: newColors
-  }), container);
 });
-
-// var tdColor = $.find('.td-color')
-// if(tdColor[0]){
-//   for(var i in tdColor){
-//     console.log(tdColor[i].innerText)
-//   }
-// }
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(83)))
 
 /***/ }),
@@ -20117,23 +20038,25 @@ var Row = function (_React$Component) {
     value: function render() {
       var _this2 = this;
 
-      // This is where the colorId is passed into
-      // this bottom component vvvvvv
-      // const colorId = this.props.colorId
       return _react2.default.createElement(
         'tr',
         null,
         _react2.default.createElement(
           'td',
-          { className: 'td-color' },
+          {
+            className: 'td-color',
+            style: { backgroundColor: this.props.color }
+          },
           this.props.color
         ),
         _react2.default.createElement(
           'td',
-          { className: 'table-data td-click',
+          {
+            className: 'table-data td-click',
             onClick: function onClick() {
-              return _this2.props.onDelete(_this2.props.color);
-            } },
+              return _this2.props.onDelete(_this2.props.colorId);
+            }
+          },
           'delete'
         )
       );
@@ -20195,8 +20118,9 @@ var Rows = function (_React$Component) {
       var rows = this.props.colors.map(function (color, index) {
         return _react2.default.createElement(_row2.default, {
           key: index,
-          color: color,
-          onDelete: _this2.props.onDelete
+          color: color.color,
+          onDelete: _this2.props.onDelete,
+          colorId: color.id
         });
       });
       return _react2.default.createElement(
@@ -20212,76 +20136,8 @@ var Rows = function (_React$Component) {
 
 exports.default = Rows;
 
-//  colorId={color.id}
-
 /***/ }),
-/* 88 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = __webpack_require__(21);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _reactDom = __webpack_require__(20);
-
-var _reactDom2 = _interopRequireDefault(_reactDom);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var Tiles = function (_React$Component) {
-  _inherits(Tiles, _React$Component);
-
-  function Tiles() {
-    _classCallCheck(this, Tiles);
-
-    return _possibleConstructorReturn(this, (Tiles.__proto__ || Object.getPrototypeOf(Tiles)).apply(this, arguments));
-  }
-
-  _createClass(Tiles, [{
-    key: 'render',
-    value: function render() {
-      // There are several examples of map available. Some
-      // omit the index parameter. It's better to keep 
-      // it in.
-      // In the example below, background color is passed 
-      // in to allow for dynamic rendering. The rest of 
-      // styling is held in the CSS file. 
-      var tiles = this.props.colors.map(function (color, index) {
-        return _react2.default.createElement('div', {
-          className: 'tile',
-          style: { backgroundColor: color },
-          key: index
-        });
-      });
-      return _react2.default.createElement(
-        'div',
-        { className: 'tiles' },
-        tiles
-      );
-    }
-  }]);
-
-  return Tiles;
-}(_react2.default.Component);
-
-exports.default = Tiles;
-
-/***/ }),
+/* 88 */,
 /* 89 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -20290,7 +20146,7 @@ exports = module.exports = __webpack_require__(90)(undefined);
 exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700,300);", ""]);
 
 // module
-exports.push([module.i, "body {\n  background: lightcyan;\n  font-family: 'Roboto Condensed', sans-serif;\n}\n.form-field {\n  text-align: center;\n}\n.form-input {\n  font-size: 1.1em;\n  padding: .25em;\n  border-radius: 5px;\n  border-style: none;\n  border: .01em solid grey;\n}\n.submit-button {\n  font-size: 1.1em;\n  padding: .3em;\n  border-radius: 5px;\n  border-style: none;\n  background-color: blueviolet;\n  color: white;\n}\n.submit-button:hover {\n  cursor: pointer;\n  background-color: cornflowerblue;\n}\n.td-color {\n  border-width: 0.05em;\n  border-style: solid;\n  border-color: lightgrey;\n  border-radius: 5px;\n  padding: 0.3em;  \n}\n.table-data {\n  border: .1em solid aliceblue;\n  border-radius: .5em;\n  padding: .3em;\n}\n.td-click {\n  width: 1em;\n  font-size: .8em;\n  background: red;\n  color: white;\n  padding: .6em;\n  text-align: center;\n}\n.td-click:hover {\n  background: crimson;\n  cursor: pointer;\n}\n.table-container {\n  min-width: 19em;\n  margin: 0 auto;\n}\n.thead-container {\n  text-align: left;\n  font-size: 1.2em;\n  color: darkcyan;\n}\n.tiles {\n  width: 15em;\n  margin: 1em auto;\n}\n.tile {\n  height: 2em;\n  width: 2em;\n  border-radius: 10px;\n  display: inline-block;\n  margin: .2em;\n}", ""]);
+exports.push([module.i, "body {\n  background: lightcyan;\n  font-family: 'Roboto Condensed', sans-serif;\n}\nh2, .library-header, .react-header {\n  text-align: center;\n}\n.library-header, .react-header {\n  margin-bottom: .5em;\n}\n.form-field {\n  text-align: center;\n  margin-bottom: 1.5em;\n}\n.form-input {\n  font-size: 1.1em;\n  padding: .25em;\n  border-radius: 5px;\n  border-style: none;\n  border: .01em solid grey;\n}\n.submit-button {\n  font-size: 1.1em;\n  padding: .3em;\n  border-radius: 5px;\n  border-style: none;\n  background-color: blueviolet;\n  color: white;\n}\n.submit-button:hover {\n  cursor: pointer;\n  background-color: cornflowerblue;\n}\n.td-color {\n  border-width: 0.05em;\n  border-style: solid;\n  border-color: lightgrey;\n  border-radius: 5px;\n  padding: 0.3em; \n  color: white; \n}\n.table-data {\n  border: .1em solid aliceblue;\n  border-radius: .5em;\n  padding: .3em;\n}\n.td-click {\n  width: 1em;\n  font-size: .8em;\n  background: red;\n  color: white;\n  padding: .6em;\n  text-align: center;\n}\n.td-click:hover {\n  background: crimson;\n  cursor: pointer;\n}\n.table-container {\n  min-width: 19em;\n  margin: 0 auto;\n}\n", ""]);
 
 // exports
 
@@ -33318,6 +33174,30 @@ module.exports = function (css) {
 	return fixedCss;
 };
 
+
+/***/ }),
+/* 192 */,
+/* 193 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var cssColors = ["AliceBlue", "AntiqueWhite", "Aqua", "Aquamarine", "Azure", "Beige", "Bisque", "Black", "BlanchedAlmond", "Blue", "BlueViolet", "Brown", "BurlyWood", "CadetBlue", "Chartreuse", "Chocolate", "Coral", "CornflowerBlue", "Cornsilk", "Crimson", "Cyan", "DarkBlue", "DarkCyan", "DarkGoldenRod", "DarkGray", "DarkGrey", "DarkGreen", "DarkKhaki", "DarkMagenta", "DarkOliveGreen", "Darkorange", "DarkOrchid", "DarkRed", "DarkSalmon", "DarkSeaGreen", "DarkSlateBlue", "DarkSlateGray", "DarkSlateGrey", "DarkTurquoise", "DarkViolet", "DeepPink", "DeepSkyBlue", "DimGray", "DimGrey", "DodgerBlue", "FireBrick", "FloralWhite", "ForestGreen", "Fuchsia", "Gainsboro", "GhostWhite", "Gold", "GoldenRod", "Gray", "Grey", "Green", "GreenYellow", "HoneyDew", "HotPink", "IndianRed", "Indigo", "Ivory", "Khaki", "Lavender", "LavenderBlush", "LawnGreen", "LemonChiffon", "LightBlue", "LightCoral", "LightCyan", "LightGoldenRodYellow", "LightGray", "LightGrey", "LightGreen", "LightPink", "LightSalmon", "LightSeaGreen", "LightSkyBlue", "LightSlateGray", "LightSlateGrey", "LightSteelBlue", "LightYellow", "Lime", "LimeGreen", "Linen", "Magenta", "Maroon", "MediumAquaMarine", "MediumBlue", "MediumOrchid", "MediumPurple", "MediumSeaGreen", "MediumSlateBlue", "MediumSpringGreen", "MediumTurquoise", "MediumVioletRed", "MidnightBlue", "MintCream", "MistyRose", "Moccasin", "NavajoWhite", "Navy", "OldLace", "Olive", "OliveDrab", "Orange", "OrangeRed", "Orchid", "PaleGoldenRod", "PaleGreen", "PaleTurquoise", "PaleVioletRed", "PapayaWhip", "PeachPuff", "Peru", "Pink", "Plum", "PowderBlue", "Purple", "Red", "RosyBrown", "RoyalBlue", "SaddleBrown", "Salmon", "SandyBrown", "SeaGreen", "SeaShell", "Sienna", "Silver", "SkyBlue", "SlateBlue", "SlateGray", "SlateGrey", "Snow", "SpringGreen", "SteelBlue", "Tan", "Teal", "Thistle", "Tomato", "Turquoise", "Violet", "Wheat", "White", "WhiteSmoke", "Yellow", "YellowGreen"];
+
+var checkColor = function checkColor(color) {
+  for (var i in cssColors) {
+    var colorGiven = color.toLowerCase();
+    var colorChecked = cssColors[i].toLowerCase();
+    if (colorGiven == colorChecked) {
+      return true;
+    }
+  }
+};
+exports.checkColor = checkColor;
 
 /***/ })
 /******/ ]);
